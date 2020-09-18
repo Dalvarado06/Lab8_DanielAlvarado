@@ -33,6 +33,7 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
+        arranqueTabla();
     }
 
     /**
@@ -869,7 +870,62 @@ public class Principal extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jb_MostrarArbolMouseClicked
+    
+    public void arranqueTabla(){
+        File archivo = new File("./Clau.txt");
+        DefaultComboBoxModel modelc = (DefaultComboBoxModel) cb_Playlists.getModel();
+        DefaultTableModel modelt = (DefaultTableModel) jt_CancionesPlaylist.getModel();
+        Scanner sc = null;
+        try {
+            Playlist p = new Playlist();
 
+                String nombre = archivo.getName();
+                int l = nombre.length();
+
+                nombre = nombre.substring(0, l - 4);
+
+                p.setNombre(nombre);
+                modelc.setSelectedItem(p);
+                sc = new Scanner(archivo);
+
+                String file = "";
+
+                while (sc.hasNext()) {
+                    file += sc.next();
+
+                }
+                String result = file.replace("|", ";");
+
+                sc = new Scanner(result);
+                sc.useDelimiter(";");
+
+                while (sc.hasNext()) {
+
+                    Cancion c = new Cancion(sc.next(), sc.nextInt(), sc.nextInt(),
+                            sc.next(), sc.next());
+
+                    Object[] newRow = {
+                        c.getNombre(),
+                        c.getPuntuacion(),
+                        c.getAnio(),
+                        c.getArtista(),
+                        c.getAlbum()
+                    };
+                    modelt.addRow(newRow);
+
+                    p.getListaCanciones().add(c);
+
+                }
+                
+                
+                modelc.addElement(p);
+                jt_CancionesPlaylist.setModel(modelt);
+                cb_Playlists.setModel(modelc);
+            
+        } catch (Exception e) {
+        }
+    }
+    
     private void limpiarTable() {
         jt_CancionesPlaylist.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
