@@ -2,7 +2,7 @@ Inkliveparis|10|2014|Coldplay|LoveStories|
 VivalaVida|10|2008|Coldplay|Vivalavida|
 StrawBerrySwing|9|2008|Coldplay|Vivalavida|
 LifeinTechnicolorii|10|2008|Coldplay|Vivalavida|
-Orphans|8|2019|Coldplay|EverydayLife|
+Orphans|10|2019|Coldplay|EverydayLife|
 Shiver|9|2000|Coldplay|Parachutes|
 Yellow|10|2000|Coldplay|Parachutes|
 Clocks|10|2000|Coldplay|ARushofBloodtotheHead|
