@@ -1,0 +1,10 @@
+EvilWoman|8|1975|ElectricLightOrchestra|OutoftheBlue|
+TurnintoStone|8|1975|ElectricLightOrchestra|OutoftheBlue|
+Tiempo|10|1973|PinkFloyd|TheDarkSideoftheMoon|
+Money|10|1973|PinkFloyd|TheDarkSideoftheMoon|
+TheGreatGigintheSky|9|1973|PinkFloyd|TheDarkSideoftheMoon|
+Whocanitbenow|10|1981|MenatWork|BussinesasUsual|
+DrHeckleandMrJive|9|1983|MenatWork|Cargo|
+ItsaMistake|9|1983|MenatWork|Cargo|
+ASkyFullofStars|10|2014|Coldplay|LoveStory|
+KnightofCydonia|9|2006|Muse|BlackHolesandRevelations|
