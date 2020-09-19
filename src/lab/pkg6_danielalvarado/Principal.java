@@ -21,7 +21,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 /**
- * Te queremos clau, Te queremos, Te queremos Clau, Te queremos 
+ * Te queremos clau, Te queremos, Te queremos Clau, Te queremos
  *
  *
  * @author dalva
@@ -647,7 +647,7 @@ public class Principal extends javax.swing.JFrame {
                     + "llenadas para poder agregar la cancion");
 
         } else if (cb_Playlists.getSelectedIndex() >= 0) {
-            
+
             DefaultTableModel modelo = (DefaultTableModel) jt_CancionesPlaylist.getModel();
             Cancion c = new Cancion(jt_NombreCancion.getText(),
                     (int) js_Puntuacion.getValue(),
@@ -673,9 +673,9 @@ public class Principal extends javax.swing.JFrame {
             js_Year.setValue(2000);
             jt_Artista.setText("");
             jt_Album.setText("");
-            
-            ((Playlist)cb_Playlists.getSelectedItem()).getListaCanciones().add(c);
-            
+
+            ((Playlist) cb_Playlists.getSelectedItem()).getListaCanciones().add(c);
+
             JOptionPane.showMessageDialog(this, "La cancion ha sido creada exitosamente");
 
         } else {
@@ -808,16 +808,14 @@ public class Principal extends javax.swing.JFrame {
             ((Playlist) cb_Playlists.getSelectedItem()).escribirArchivo();
         } catch (Exception e) {
         }
-        
 
         JFileChooser fileChooser = new JFileChooser("./");
 
         int seleccion = fileChooser.showOpenDialog(this);
-        
-        
+
         if (seleccion == JFileChooser.APPROVE_OPTION) {
             limpiarTable();
-            
+
             try {
 
                 File archivo = fileChooser.getSelectedFile();
@@ -860,8 +858,7 @@ public class Principal extends javax.swing.JFrame {
                     p.getListaCanciones().add(c);
 
                 }
-                
-                
+
                 modelc.addElement(p);
                 jt_CancionesPlaylist.setModel(modelt);
                 cb_Playlists.setModel(modelc);
@@ -897,40 +894,67 @@ public class Principal extends javax.swing.JFrame {
         DefaultTreeModel modelt = (DefaultTreeModel) arbol_Playlist.getModel();
         DefaultComboBoxModel modelo = (DefaultComboBoxModel) cb_Playlists.getModel();
         DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelt.getRoot();
-        
+        boolean noArt = false;
+
         raiz.removeAllChildren();
-        
+
         if (cb_Playlists.getSelectedIndex() >= 0) {
-            Playlist p = (Playlist)cb_Playlists.getSelectedItem();
-            
+            Playlist p = (Playlist) cb_Playlists.getSelectedItem();
+
             for (int i = 0; i < p.getListaCanciones().size(); i++) {
                 Cancion c = p.getListaCanciones().get(i);
-                
-                DefaultMutableTreeNode nombre = new DefaultMutableTreeNode(c.getNombre());
-                DefaultMutableTreeNode punt = new DefaultMutableTreeNode(c.getPuntuacion());
-                DefaultMutableTreeNode year = new DefaultMutableTreeNode(c.getAnio());
-                DefaultMutableTreeNode artista = new DefaultMutableTreeNode(c.getArtista());
-                DefaultMutableTreeNode album = new DefaultMutableTreeNode(c.getAlbum());
-                
-                nombre.add(punt);
-                nombre.add(year);
-                nombre.add(artista);
-                nombre.add(album);
-                
-                raiz.add(nombre);       
+
+                for (int j = 0; j < raiz.getChildCount(); j++) {
+                    DefaultMutableTreeNode nodoArt = (DefaultMutableTreeNode) raiz.getChildAt(j);
+
+                    if (nodoArt.toString().equals(c.getArtista())) {
+                        DefaultMutableTreeNode nombre = new DefaultMutableTreeNode(c.getNombre());
+                        DefaultMutableTreeNode punt = new DefaultMutableTreeNode("Puntuacion: "+c.getPuntuacion());
+                        DefaultMutableTreeNode year = new DefaultMutableTreeNode("Year: "+c.getAnio());
+                        DefaultMutableTreeNode album = new DefaultMutableTreeNode("Album: "+c.getAlbum());
+
+                        
+                        nombre.add(album);
+                        nombre.add(year);
+                        nombre.add(punt);
+                        nodoArt.add(nombre);
+
+                        raiz.add(nodoArt);
+
+                        noArt = true;
+                    } else {
+                        noArt = false;
+                    }
+
+                }
+
+                if (noArt == false) {
+                    DefaultMutableTreeNode nombre = new DefaultMutableTreeNode(c.getNombre());
+                    DefaultMutableTreeNode punt = new DefaultMutableTreeNode("Puntuacion: "+c.getPuntuacion());
+                    DefaultMutableTreeNode year = new DefaultMutableTreeNode("Year: "+c.getAnio());
+                    DefaultMutableTreeNode artista = new DefaultMutableTreeNode(c.getArtista());
+                    DefaultMutableTreeNode album = new DefaultMutableTreeNode("Album: "+c.getAlbum());
+                    nombre.add(punt);
+                    nombre.add(year);
+                    nombre.add(album);
+                    artista.add(nombre);
+                    raiz.add(artista);
+                }
             }
-            
+
             modelt.reload();
-            
-            JOptionPane.showMessageDialog(this, "El arbol ha sido llenado");
-        }else{
+
+        } else {
             JOptionPane.showMessageDialog(this, "No hay una Playlist seleccionada");
+
+            JOptionPane.showMessageDialog(this, "El arbol ha sido llenado");
+
         }
 
 
     }//GEN-LAST:event_jb_MostrarArbolMouseClicked
-    
-    public void arranqueTabla(){
+
+    public void arranqueTabla() {
         File archivo = new File("./Clau.txt");
         DefaultComboBoxModel modelc = (DefaultComboBoxModel) cb_Playlists.getModel();
         DefaultTableModel modelt = (DefaultTableModel) jt_CancionesPlaylist.getModel();
@@ -938,53 +962,52 @@ public class Principal extends javax.swing.JFrame {
         try {
             Playlist p = new Playlist();
 
-                String nombre = archivo.getName();
-                int l = nombre.length();
+            String nombre = archivo.getName();
+            int l = nombre.length();
 
-                nombre = nombre.substring(0, l - 4);
+            nombre = nombre.substring(0, l - 4);
 
-                p.setNombre(nombre);
-                modelc.setSelectedItem(p);
-                sc = new Scanner(archivo);
+            p.setNombre(nombre);
+            modelc.setSelectedItem(p);
+            sc = new Scanner(archivo);
 
-                String file = "";
+            String file = "";
 
-                while (sc.hasNext()) {
-                    file += sc.next();
+            while (sc.hasNext()) {
+                file += sc.next();
 
-                }
-                String result = file.replace("|", ";");
+            }
+            String result = file.replace("|", ";");
 
-                sc = new Scanner(result);
-                sc.useDelimiter(";");
+            sc = new Scanner(result);
+            sc.useDelimiter(";");
 
-                while (sc.hasNext()) {
+            while (sc.hasNext()) {
 
-                    Cancion c = new Cancion(sc.next(), sc.nextInt(), sc.nextInt(),
-                            sc.next(), sc.next());
+                Cancion c = new Cancion(sc.next(), sc.nextInt(), sc.nextInt(),
+                        sc.next(), sc.next());
 
-                    Object[] newRow = {
-                        c.getNombre(),
-                        c.getPuntuacion(),
-                        c.getAnio(),
-                        c.getArtista(),
-                        c.getAlbum()
-                    };
-                    modelt.addRow(newRow);
+                Object[] newRow = {
+                    c.getNombre(),
+                    c.getPuntuacion(),
+                    c.getAnio(),
+                    c.getArtista(),
+                    c.getAlbum()
+                };
+                modelt.addRow(newRow);
 
-                    p.getListaCanciones().add(c);
+                p.getListaCanciones().add(c);
 
-                }
-                
-                
-                modelc.addElement(p);
-                jt_CancionesPlaylist.setModel(modelt);
-                cb_Playlists.setModel(modelc);
-            
+            }
+
+            modelc.addElement(p);
+            jt_CancionesPlaylist.setModel(modelt);
+            cb_Playlists.setModel(modelc);
+
         } catch (Exception e) {
         }
     }
-    
+
     private void limpiarTable() {
         jt_CancionesPlaylist.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
@@ -993,7 +1016,12 @@ public class Principal extends javax.swing.JFrame {
                 }
         ) {
             Class[] types = new Class[]{
-                java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class,
+                java.lang.Integer.class,
+                java.lang.Integer.class,
+                java.lang.String.class,
+                java.lang.String.class
+
             };
             boolean[] canEdit = new boolean[]{
                 false, false, false, false, false
@@ -1028,13 +1056,17 @@ public class Principal extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Principal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
