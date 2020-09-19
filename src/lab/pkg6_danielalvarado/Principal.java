@@ -803,19 +803,19 @@ public class Principal extends javax.swing.JFrame {
         DefaultTableModel modelt = (DefaultTableModel) jt_CancionesPlaylist.getModel();
         DefaultComboBoxModel modelc = (DefaultComboBoxModel) cb_Playlists.getModel();
         Scanner sc = null;
-
+ 
         try {
             ((Playlist) cb_Playlists.getSelectedItem()).escribirArchivo();
         } catch (Exception e) {
         }
-
+  
         JFileChooser fileChooser = new JFileChooser("./");
 
         int seleccion = fileChooser.showOpenDialog(this);
 
         if (seleccion == JFileChooser.APPROVE_OPTION) {
             limpiarTable();
-
+            
             try {
 
                 File archivo = fileChooser.getSelectedFile();
@@ -909,11 +909,10 @@ public class Principal extends javax.swing.JFrame {
 
                     if (nodoArt.toString().equals(c.getArtista())) {
                         DefaultMutableTreeNode nombre = new DefaultMutableTreeNode(c.getNombre());
-                        DefaultMutableTreeNode punt = new DefaultMutableTreeNode("Puntuacion: "+c.getPuntuacion());
-                        DefaultMutableTreeNode year = new DefaultMutableTreeNode("Year: "+c.getAnio());
-                        DefaultMutableTreeNode album = new DefaultMutableTreeNode("Album: "+c.getAlbum());
+                        DefaultMutableTreeNode punt = new DefaultMutableTreeNode("Puntuacion: " + c.getPuntuacion());
+                        DefaultMutableTreeNode year = new DefaultMutableTreeNode("Year: " + c.getAnio());
+                        DefaultMutableTreeNode album = new DefaultMutableTreeNode("Album: " + c.getAlbum());
 
-                        
                         nombre.add(album);
                         nombre.add(year);
                         nombre.add(punt);
@@ -930,10 +929,10 @@ public class Principal extends javax.swing.JFrame {
 
                 if (noArt == false) {
                     DefaultMutableTreeNode nombre = new DefaultMutableTreeNode(c.getNombre());
-                    DefaultMutableTreeNode punt = new DefaultMutableTreeNode("Puntuacion: "+c.getPuntuacion());
-                    DefaultMutableTreeNode year = new DefaultMutableTreeNode("Year: "+c.getAnio());
+                    DefaultMutableTreeNode punt = new DefaultMutableTreeNode("Puntuacion: " + c.getPuntuacion());
+                    DefaultMutableTreeNode year = new DefaultMutableTreeNode("Year: " + c.getAnio());
                     DefaultMutableTreeNode artista = new DefaultMutableTreeNode(c.getArtista());
-                    DefaultMutableTreeNode album = new DefaultMutableTreeNode("Album: "+c.getAlbum());
+                    DefaultMutableTreeNode album = new DefaultMutableTreeNode("Album: " + c.getAlbum());
                     nombre.add(punt);
                     nombre.add(year);
                     nombre.add(album);
